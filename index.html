@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>WEEK 9</title>
+  </head>
+  <style>
+    body {
+        font-family: arial, sans-serif;
+        background-color: rgb(135, 186, 228);
+    }
+
+    h1 {
+        color: yellow;
+        display: block;
+        font-size: 24px;
+        font-weight: 100;
+        line-height: 28px;
+        text-align: left;
+        margin-bottom: 0;
+    }
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+    li {
+        list-style: none;
+        color: yellow;
+        margin: 0;
+        padding: 0;
+        font-size: 16px;
+        font-weight: 100;
+        line height: 19px;
+        
+    }
+    li:first-letter{
+text-transform: capitalize;
+    }
+     .weather-app {
+
+      padding: 20px;
+      border: 1px solid yellow;
+      border-radius: 5px;
+    }
+    .weather-app-wrapper {
+      max-width: 500px;
+      margin: 30px auto;
+    }
+    .overview {
+        margin-bottom: 50px;
+    }
+    .weather-temperature img {
+        margin-right: 5px;      
+        height: 64px;
+        float: left;
+        margin-top: 15px;
+    }
+    
+    .weather-temperature strong {
+        color: rgb(239, 233, 51);
+        font-size: 80px;
+        line-height: 1;
+        font-weight: 400;
+    }
+.weather-temperature units {
+    position: relative;
+    font-size: 16px;
+    top: -32px;
+}
+.weather-description-items {
+float: right;
+}
+
+.weather-temperature .active {
+  color: rgb(142, 237, 33);
+  cursor: default;
+}
+.weather-temperature .active:hover {
+  text-decoration: none;
+  }
+.weather-forecast {
+margin-top: 20px;
+text-align: center;
+color: white;
+  }
+.weather-forecast-date, {
+    font-size: 16px;
+    opacity: 0.5;
+}
+.weather-forecast-temperature-min {
+    opacity: 0.5;
+}
+.weather-forecast-temperatures {
+    font-size: 13px;
+}
+
+  </style>
+  <body>
+    
+    <div class="container">
+      <div class="weather-app-wrapper">
+        <div class="weather-app">
+          <form id="search-form" class="mb-5">
+            <div class="row">
+              <div class="col-9">
+                <input
+                  type="search"
+                  placeholder="Enter a city ..."
+                  class="form-control"
+                  id="city-input"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="col-3">
+                <input
+                  type="submit"
+                  value="Search"
+                  class="btn btn-primary w-100"
+                />
+              </div>
+            </div>
+          </form>
+            <div class="overview">
+          
+            
+            <h1 id="city"></h1>
+            <ul>
+              <li>
+                <li>Last updated: <span id="date"></span> </li>
+            </li>
+              <li id="description">
+                Clear
+            </li>
+            </ul>
+            </div>
+          <div class="row">
+          <div class="col-6">
+            <div class="clearfix weather-temperature">
+          <img
+            src="https://ssl.gstatic.com/onebox/weather/64/sunny.png"
+            alt="clear"
+            id="icon"
+            cass="float-left"
+          />
+          <div class="float-left">
+          <strong id="temperature"></strong>
+        <span class="units">
+          <a href="#" id="celcius-link" class="active">°C</a>
+           | 
+           <a href="#" id="fahrenheit-link">°F</a>
+          </span>
+        </div>
+        </div>
+        </div>
+        
+          <div class="col-6">
+            <ul class="weather-description-items">
+            <li>
+                Humidity: <span id="humidity"></span>%
+            </li>
+              <li>
+                Wind: <span id="wind"></span> km/h
+            </li>
+            </ul>
+          </div>
+        </div>
+    <div class="weather-forecast">
+            <div class="row">
+                <div class="col-2">
+                    <div class="weather-forecast-date">
+                    Tue 
+                    </div>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUlW_eh2pDdvP0666WmV1VRzr-aFW2F9Tofw&usqp=CAU" 
+                    alt=""
+                    width="42"/>
+                    <div class="weather-forecast-temperatures">
+                    <span class="weather-forecast-temperature-max">18°C</span>
+                <span class="weather-forecast-temperature-min">20°C</span>
+                                 </div>
+                </div>
+            </div>
+            
+        </div>    
+    </div> 
+      </div>
+      <small>
+        <a href="https://github.com/OksanaYur/GitHub-challenge" target="_blank"
+          >Open-source code </a
+        >by OksanaY
+      </small>
+    </div>
+    <script>
+
+function formatDate(timestamp) {
+  let date = new Date(timestamp);
+  let hours = date.getHours();
+  if (hours < 10) {
+    hours = `0${hours}`;
+  }
+  let minutes = date.getMinutes();
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  let day = days[date.getDay()];
+  return `${day} ${hours}:${minutes}`;
+}
+
+function displayTemperature(response) {
+
+let cityElement = document.querySelector("#city");
+cityElement.innerHTML = response.data.name;
+
+let temperatureElemement=document.querySelector("#temperature");
+temperatureElemement.innerHTML = Math.round(celciusTemperature);
+
+let descriptionElement = document.querySelector("#description");
+descriptionElement.innerHTML = response.data.weather[0].description;
+
+let humidityElement = document.querySelector("#humidity");
+humidityElement.innerHTML = response.data.main.humidity;
+
+let windElement = document.querySelector("#wind");
+windElement.innerHTML = Math.round(response.data.wind.speed);
+
+let dateElement = document.querySelector("#date");
+dateElement.innerHTML = formatDate(response.data.dt * 1000);
+
+let iconElement = document.querySelector("#icon");
+iconElement.setAttribute("src",`http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
+  iconElement.setAttribute("alt", response.data.weather[0].description);
+
+celciusTemperature = response.data.main.temp;
+}
+
+function search(city) {
+  let apiKey = "fe80b84fc85eea0c9b1fafa5aa3bbced";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayTemperature);
+}
+
+function handleSubmit(event) {
+  event.preventDefault();
+  let cityInputElement = document.querySelector("#city-input");
+  search(cityInputElement.value);
+}
+
+function displayFahrenheitTemperature (event) {
+  event.preventDefault();
+  let temperatureElemement = document.querySelector("#temperature");
+  celciusLink.classList.remove("active");
+  fahrenheitLink.classList.add("active");
+  let fahrenheitTemperature = (celciusTemperature * 9) / 5 + 32;
+  temperatureElemement.innerHTML = Math.round(fahrenheitTemperature);
+}
+
+function displayCelciusTemperature (event) {
+  event.preventDefault();
+  let temperatureElemement = document.querySelector("#temperature");
+  celciusLink.classList.add("active");
+  fahrenheitLink.classList.remove("active");
+  temperatureElemement.innerHTML = Math.round(celciusTemperature);
+}
+      
+let celciusTemperature = null;
+
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
+
+let fahrenheitLink = document.querySelector("#fahrenheit-link");
+fahrenheitLink.addEventListener("click", displayFahrenheitTemperature);
+
+let celciusLink = document.querySelector("#celcius-link");
+celciusLink.addEventListener("click", displayCelciusTemperature);
+
+search("Uzhhorod");  
+
+    </script>
+  </body>
+</html>
+
