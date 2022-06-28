@@ -173,25 +173,10 @@ color: white;
             </ul>
           </div>
         </div>
-    <div class="weather-forecast">
-            <div class="row">
-                <div class="col-2">
-                    <div class="weather-forecast-date">
-                    Tue 
-                    </div>
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUlW_eh2pDdvP0666WmV1VRzr-aFW2F9Tofw&usqp=CAU" 
-                    alt=""
-                    width="42"/>
-                    <div class="weather-forecast-temperatures">
-                    <span class="weather-forecast-temperature-max">18°C</span>
-                <span class="weather-forecast-temperature-min">20°C</span>
-                                 </div>
-                </div>
-            </div>
-            
-        </div>    
+    <div class="weather-forecast" id="forecast">
     </div> 
       </div>
+      </div>  
       <small>
         <a href="https://github.com/OksanaYur/GitHub-challenge" target="_blank"
           >Open-source code </a
@@ -222,6 +207,37 @@ function formatDate(timestamp) {
   ];
   let day = days[date.getDay()];
   return `${day} ${hours}:${minutes}`;
+}
+
+function displayForecast() {
+    let forecastElement = document.querySelector("#forecast");
+    
+    let forecastHTML = `<div class="row">`;
+    let days = ["Tue", "Wed", "Thur", "Fri", "Sat"];
+    days.forEach(function (day) {
+forecastHTML = forecastHTML + 
+    `  <div class="col-2">
+                    <div class="weather-forecast-date">
+                    ${day} 
+                    </div>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUlW_eh2pDdvP0666WmV1VRzr-aFW2F9Tofw&usqp=CAU" 
+                    alt=""
+                    width="42"/>
+                    <div class="weather-forecast-temperatures">
+                    <span class="weather-forecast-temperature-max">18°C</span>
+                <span class="weather-forecast-temperature-min">20°C</span>
+                    </div>
+                </div>
+         `
+         ;
+    })
+    
+    
+    
+     
+    forecastHTML = forecastHTML+ `</div>`;
+    forecastElement.innerHTML = forecastHTML;
+   
 }
 
 function displayTemperature(response) {
@@ -282,6 +298,7 @@ function displayCelciusTemperature (event) {
       
 let celciusTemperature = null;
 
+
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
 
@@ -292,7 +309,7 @@ let celciusLink = document.querySelector("#celcius-link");
 celciusLink.addEventListener("click", displayCelciusTemperature);
 
 search("Uzhhorod");  
-
+displayForecast();
     </script>
   </body>
 </html>
