@@ -239,6 +239,12 @@ forecastHTML = forecastHTML +
     forecastElement.innerHTML = forecastHTML;
    
 }
+function getForecast(coordinates) {
+  console.log(coordinates);
+  let apiKey = "fe80b84fc85eea0c9b1fafa5aa3bbced";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayForecast);
+}
 
 function displayTemperature(response) {
 
@@ -265,6 +271,8 @@ iconElement.setAttribute("src",`http://openweathermap.org/img/wn/${response.data
   iconElement.setAttribute("alt", response.data.weather[0].description);
 
 celciusTemperature = response.data.main.temp;
+
+getForecast(response.data.coord);
 }
 
 function search(city) {
@@ -309,7 +317,7 @@ let celciusLink = document.querySelector("#celcius-link");
 celciusLink.addEventListener("click", displayCelciusTemperature);
 
 search("Uzhhorod");  
-displayForecast();
+
     </script>
   </body>
 </html>
