@@ -39,7 +39,7 @@
         padding: 0;
         font-size: 16px;
         font-weight: 100;
-        line height: 19px;
+        line-height: 19px;
         
     }
     li:first-letter{
@@ -92,7 +92,7 @@ margin-top: 20px;
 text-align: center;
 color: white;
   }
-.weather-forecast-date, {
+.weather-forecast-date {
     font-size: 16px;
     opacity: 0.5;
 }
@@ -102,6 +102,7 @@ color: white;
 .weather-forecast-temperatures {
     font-size: 13px;
 }
+
 
   </style>
   <body>
@@ -153,11 +154,7 @@ color: white;
           />
           <div class="float-left">
           <strong id="temperature"></strong>
-        <span class="units">
-          <a href="#" id="celcius-link" class="active">°C</a>
-           | 
-           <a href="#" id="fahrenheit-link">°F</a>
-          </span>
+        <span class="units">°C</span>
         </div>
         </div>
         </div>
@@ -168,7 +165,7 @@ color: white;
                 Humidity: <span id="humidity"></span>%
             </li>
               <li>
-                Wind: <span id="wind"></span> km/h
+                Wind: <span id="wind"></span> m/h
             </li>
             </ul>
           </div>
@@ -178,7 +175,9 @@ color: white;
       </div>
       </div>  
       <small>
-        <a href="https://github.com/OksanaYur/GitHub-challenge" target="_blank"
+        <a href="https://github.com/OksanaYur/week-9" 
+        class="github-link"
+        target="_blank"
           >Open-source code </a
         >by OksanaY
       </small>
@@ -269,7 +268,7 @@ let cityElement = document.querySelector("#city");
 cityElement.innerHTML = response.data.name;
 
 let temperatureElemement=document.querySelector("#temperature");
-temperatureElemement.innerHTML = Math.round(celciusTemperature);
+temperatureElemement.innerHTML = Math.round(response.data.main.temp);
 
 let descriptionElement = document.querySelector("#description");
 descriptionElement.innerHTML = response.data.weather[0].description;
@@ -287,7 +286,7 @@ let iconElement = document.querySelector("#icon");
 iconElement.setAttribute("src",`http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
   iconElement.setAttribute("alt", response.data.weather[0].description);
 
-celciusTemperature = response.data.main.temp;
+
 
 getForecast(response.data.coord);
 }
@@ -303,35 +302,10 @@ function handleSubmit(event) {
   let cityInputElement = document.querySelector("#city-input");
   search(cityInputElement.value);
 }
-
-function displayFahrenheitTemperature (event) {
-  event.preventDefault();
-  let temperatureElemement = document.querySelector("#temperature");
-  celciusLink.classList.remove("active");
-  fahrenheitLink.classList.add("active");
-  let fahrenheitTemperature = (celciusTemperature * 9) / 5 + 32;
-  temperatureElemement.innerHTML = Math.round(fahrenheitTemperature);
-}
-
-function displayCelciusTemperature (event) {
-  event.preventDefault();
-  let temperatureElemement = document.querySelector("#temperature");
-  celciusLink.classList.add("active");
-  fahrenheitLink.classList.remove("active");
-  temperatureElemement.innerHTML = Math.round(celciusTemperature);
-}
-      
-let celciusTemperature = null;
-
+ let celsiusTemperature = null;   
 
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
-
-let fahrenheitLink = document.querySelector("#fahrenheit-link");
-fahrenheitLink.addEventListener("click", displayFahrenheitTemperature);
-
-let celciusLink = document.querySelector("#celcius-link");
-celciusLink.addEventListener("click", displayCelciusTemperature);
 
 search("Uzhhorod");  
 
