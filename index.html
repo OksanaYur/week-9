@@ -16,25 +16,126 @@
   <style>
     body {
         font-family: arial, sans-serif;
-        background-color: rgb(135, 186, 228);
-    }
+        background-color: #679186;
+        display: block;
+        text-align: center;
+        }
 
     h1 {
-        color: yellow;
+        color: white;
         display: block;
+        text-align: center;
         font-size: 24px;
         font-weight: 100;
         line-height: 28px;
-        text-align: left;
         margin-bottom: 0;
+        margin-top: 50px;
     }
+    h2 {
+      color: white;
+        display: block;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 100;
+        line-height: 28px;
+        text-align: center;
+        margin-bottom: 0;
+        margin-top: 50px;
+    }
+    button {
+ position: relative;
+ display: inline-block;
+ cursor: pointer;
+ outline: none;
+ border: 0;
+ vertical-align: middle;
+ text-decoration: none;
+ background: transparent;
+ padding: 0;
+ font-size: inherit;
+ font-family: inherit;
+}
+
+button.learn-more {
+ width: 10rem;
+ height: auto;
+}
+
+button.learn-more .circle {
+ transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+ position: relative;
+ display: block;
+ margin: 0;
+ width: 3rem;
+ height: 3rem;
+ background: #EC6E4C;
+ border-radius: 1.625rem;
+}
+
+button.learn-more .circle .icon {
+ transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+ position: absolute;
+ top: 0;
+ bottom: 0;
+ margin: auto;
+ background: #fff;
+}
+
+button.learn-more .circle .icon.arrow {
+ transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+ left: 0.625rem;
+ width: 1.125rem;
+ height: 0.125rem;
+ background: none;
+}
+
+button.learn-more .circle .icon.arrow::before {
+ position: absolute;
+ content: "";
+ top: -0.29rem;
+ right: 0.0625rem;
+ width: 0.625rem;
+ height: 0.625rem;
+ border-top: 0.125rem solid #fff;
+ border-right: 0.125rem solid #fff;
+ transform: rotate(45deg);
+}
+
+button.learn-more .button-text {
+ transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+ position: absolute;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ padding: 0.75rem 0;
+ margin: 0 0 0 1.85rem;
+ color: #EC6E4C;
+ font-weight: 700;
+ line-height: 1.6;
+ text-align: center;
+ text-transform: uppercase;
+}
+
+button:hover .circle {
+ width: 100%;
+}
+
+button:hover .circle .icon.arrow {
+ background: #fff;
+ transform: translate(1rem, 0);
+}
+
+button:hover .button-text {
+ color: white;
+}
     ul {
         margin: 0;
         padding: 0;
     }
     li {
         list-style: none;
-        color: yellow;
+        color: white;
         margin: 0;
         padding: 0;
         font-size: 16px;
@@ -48,11 +149,11 @@ text-transform: capitalize;
      .weather-app {
 
       padding: 20px;
-      border: 1px solid yellow;
-      border-radius: 5px;
+      border: 1px solid white;
+      border-radius: 35px;
     }
     .weather-app-wrapper {
-      max-width: 500px;
+      max-width: 700px;
       margin: 30px auto;
     }
     .overview {
@@ -66,7 +167,7 @@ text-transform: capitalize;
     }
     
     .weather-temperature strong {
-        color: rgb(239, 233, 51);
+        color: #EC6E4C;
         font-size: 80px;
         line-height: 1;
         font-weight: 400;
@@ -78,6 +179,7 @@ text-transform: capitalize;
 }
 .weather-description-items {
 float: right;
+
 }
 
 .weather-temperature .active {
@@ -103,10 +205,49 @@ color: white;
     font-size: 13px;
 }
 
+.search-button {
+  padding: 1.3em 3em;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+}
+.search-button:hover {
+ border: 1px solid white;
+}
+.col-2:hover {
+    background-color: whitesmoke;
+    color: #303445;
+    border-radius: 1rem;
+    cursor: pointer;}
+.form-control {
+ border: none;
+ border-radius: 15px;
+ padding: 15px;
+ background-color: #EC6E4C;
+ box-shadow: 6px 6px 12px #ffffff,
+             -6px -6px 12px #c5c5c5;
+ font-size: medium;
+ font-weight: bold;
+ max-width: 400px;
+}
 
+.form-control:focus {
+ outline-color: white;
+}
   </style>
   <body>
-    
+    <h1>WEATHER 
+    </br>
+      APP</h1>
     <div class="container">
       <div class="weather-app-wrapper">
         <div class="weather-app">
@@ -122,18 +263,19 @@ color: white;
                 />
               </div>
               <div class="col-3">
-                <input
-                  type="submit"
-                  value="Search"
-                  class="btn btn-primary w-100"
-                />
+                <button class="learn-more">
+  <span class="circle" aria-hidden="true">
+  <span class="icon arrow"></span>
+  </span>
+  <span class="button-text">Search</span>
+</button>
               </div>
             </div>
           </form>
             <div class="overview">
           
             
-            <h1 id="city"></h1>
+            <h2 id="city"></h2>
             <ul>
               <li>
                 <li>Last updated: <span id="date"></span> </li>
